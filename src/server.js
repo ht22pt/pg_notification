@@ -14,8 +14,8 @@ import https from 'https';
 import http from 'http';
 import fs from 'fs';
 
-import app from './app';
 import db from './db';
+import app from './app';
 
 const port = process.env.PORT || 3000;
 const host = process.env.HOSTNAME || '0.0.0.0';
@@ -42,10 +42,10 @@ if (useHttps) {
     cert: cert
   };
   server = https.createServer(https_options, app).listen(port, host);
-  logger.info(`Node.js API server HTTPS is listening on https://${host}:${port}/`);
+  console.log(`Node.js API server HTTPS is listening on https://${host}:${port}/`);
 } else {
   server = app.listen(port, host, () => {
-    logger.info(`Node.js API server HTTP is listening on http://${host}:${port}/`);
+    console.log(`Node.js API server HTTP is listening on http://${host}:${port}/`);
   });
 }
 
