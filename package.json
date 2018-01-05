@@ -4,12 +4,76 @@
   "description": "Notification support postgres notify/listen",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src test tools migrations seeds",
+    "check": "flow check",
+    "test": "mocha --compilers js:babel-register",
+    "test-watch": "mocha --compilers js:babel-register --reporter min --watch",
+    "build": "node tools/build.js",
+    "build-watch": "node tools/build.js --watch",
+    "build-babel": "babel src -d dist -s --source-maps inline",
+    "build-db": "babel tools -d dist-tools -s --source-maps",
+    "db-version": "node tools/db.js version",
+    "db-migrate": "node tools/db.js migrate",
+    "db-rollback": "node tools/db.js rollback",
+    "db-migration": "node tools/db.js migration",
+    "db-seed": "node tools/db.js seed",
+    "docker-install": "docker-compose run --rm --no-deps api yarn install",
+    "docker-upgrade": "docker-compose run --rm --no-deps api yarn upgrade",
+    "docker-test": "docker-compose run api yarn test",
+    "docker-test-watch": "docker-compose run api yarn test-watch",
+    "docker-db-version": "docker-compose exec api yarn db-version",
+    "docker-db-migrate": "docker-compose exec api yarn db-migrate",
+    "docker-db-rollback": "docker-compose exec api yarn db-rollback",
+    "docker-db-seed": "docker-compose exec api yarn db-seed",
+    "deploy": "node tools/publish.js",
+    "start": "node tools/run.js"
   },
   "keywords": [
     "Notification",
     "postgres"
   ],
   "author": "Thanh Nguyen",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "express": "^4.16.2",
+    "express-promise-router": "^2.0.0",
+    "handlebars": "^4.0.11",
+    "handlebars-layouts": "^3.1.4",
+    "juice": "^4.2.2",
+    "knex": "^0.14.2",
+    "pg": "^7.4.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babel-template": "^6.26.0",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "chokidar": "^1.7.0",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-flowtype": "^2.40.1",
+    "eslint-plugin-import": "^2.8.0",
+    "flow-bin": "^0.61.0",
+    "mocha": "^4.0.1",
+    "rimraf": "^2.6.2"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ],
+    "sourceMaps": true,
+    "retainLines": true
+  }
 }

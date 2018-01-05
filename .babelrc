@@ -1,0 +1,18 @@
+{
+  "presets": [
+    "es2015",
+    ["env", {
+      "targets": {
+        "node": "current"
+      }
+    }],
+  ],
+  "retainLines": true,
+  "sourceMaps": true,
+  "plugins": [
+    "transform-class-properties",
+    "transform-export-extensions",
+    "transform-flow-strip-types",
+    "transform-object-rest-spread"
+  ]
+}
