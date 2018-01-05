@@ -1,54 +1,40 @@
-/*
-import knex from 'knex';
-
-const pgConString = "postgres://postgres:postgres@127.0.0.1:5432/opla";
-
-const db = knex({
-  client: 'pg',
-  connection: pgConString,
-  migrations: {
-    tableName: 'migrations',
-  },
-  debug: process.env.DATABASE_DEBUG === 'true',
-});
-
-db.withSchema('opla_public').on('notification', function(msg) {
-    console.log(msg);
-});
-
-db.raw("LISTEN watchers").then((result) => {
-  console.log(result);
-}).catch((err) => {
-  console.log(err);
-})
-
-export default db;
-*/
-var pg = require('pg');
+const pg = require('pg');
 
 //A localhost PostgreSQL database's connection string is simple.
-var connectionString = 'postgres://postgres:postgres@127.0.0.1:5432/opla';
+const connectionString = 'postgres://postgres:postgres@127.0.0.1:5432/opla?currentShema=opla_public';
 
-//Step 2
+const pool = new pg.Pool({
+  host: 'localhost',
+  port: 5432,
+  database: 'opla',
+  user: 'postgres',
+  password: 'postgres',
+});
 
-//We access a PostgreSQL client
+const clientData = new pg.Client(connectionString);
 
-//We use the 'pg' module's recommended client pooling API
-//We pass the connect function the database connection string, and a callback function
-//'onConnect'. We define that function.
-var postgres = pg.Client(connectionString)
+clientData.connect().then((client) => {
+  clientData.on('notification', function(msg) {
+    console.log(msg);
+  });
 
-postgres.co
+  clientData.query('LISTEN watchers');
+}).catch((err) => {
+  console.log(err);
+});
 
-function onConnect(err, client, done) {
-  //Err - This means something went wrong connecting to the database.
+/*
+pool.connect((err, client, done) => {
   if (err) {
-    console.error(err);
-    process.exit(1);
+    console.log(err);
   }
 
-  //For now let's end client
-  client.end();
-}
+  client.on('notification', function(msg) {
+    console.log(msg);
+  });
 
-export default pg;
+  client.query('LISEN watchers');
+
+});
+*/
+export default connectionString;
