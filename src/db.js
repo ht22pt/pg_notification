@@ -23,18 +23,4 @@ clientData.connect().then((client) => {
   console.log(err);
 });
 
-/*
-pool.connect((err, client, done) => {
-  if (err) {
-    console.log(err);
-  }
-
-  client.on('notification', function(msg) {
-    console.log(msg);
-  });
-
-  client.query('LISEN watchers');
-
-});
-*/
 export default connectionString;
