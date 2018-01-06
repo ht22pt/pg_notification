@@ -1,7 +1,7 @@
 const pg = require('pg');
 
 //A localhost PostgreSQL database's connection string is simple.
-const connectionString = 'postgres://postgres:postgres@127.0.0.1:5432/opla?currentShema=opla_public';
+const connectionString = 'postgres://postgres:postgres@127.0.0.1:5432/opla';
 
 const pool = new pg.Pool({
   host: 'localhost',
